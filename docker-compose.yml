@@ -1,0 +1,35 @@
+services:
+  api:
+    container_name: api_container_products
+    image: api_image_products
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      - DB_USER=renandcr
+      - DB_PASSWORD=1234
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB=products_management
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+  db:
+    container_name: db
+    image: postgres:12
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=renandcr
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=products_management
+    healthcheck:
+      test: psql -U renandcr products_management || exit 1
+      interval: 1s
+      timeout: 5s
+      retries: 5
+      start_period: 5m
+    volumes:
+      - ./create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
