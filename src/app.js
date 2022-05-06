@@ -12,7 +12,12 @@ const port = 3000;
 app.use("/categories", routerCategories);
 app.use("/products", routerProducts);
 
-export default app.listen(process.env.PORT || port, () => {
+// export default app.listen(process.env.PORT || port, () => {
+//   startDatabase();
+//   console.log("Server running na porta" + " " + process.env.PORT || port);
+// });
+
+export default app.listen(port, () => {
   startDatabase();
-  console.log("Server running na porta" + " " + process.env.PORT || port);
+  console.log("Server running na porta" + " " + port);
 });

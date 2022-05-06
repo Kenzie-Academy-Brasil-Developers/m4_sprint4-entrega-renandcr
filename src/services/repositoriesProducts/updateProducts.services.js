@@ -6,11 +6,15 @@ const updateProductsServices = async ({ id, name, price, category_id }) => {
       id,
     ]);
 
-    const { name: dataName, price: dataPrice } = data.rows[0];
+    const {
+      name: dataName,
+      price: dataPrice,
+      category_id: dataCategory_id,
+    } = data.rows[0];
 
     const res = await database.query(
       "UPDATE products SET name = $2, price = $3, category_id = $4 WHERE id = $1 RETURNING *",
-      [id, name || dataName, price || dataPrice, category_id]
+      [id, name || dataName, price || dataPrice, category_id || dataCategory_id]
     );
 
     if (!res.rows[0]) {

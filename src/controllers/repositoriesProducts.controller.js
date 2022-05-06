@@ -65,10 +65,11 @@ export class RepositoriesProductsController {
       return res.status(400).json({ message: err.message });
     }
   }
+
   async showCategory_id(req, res) {
     const { category_id } = req.params;
     try {
-      const products = await showCategory_idProductsServices({ category_id });
+      const products = await showCategory_idProductsServices(category_id);
 
       return res.status(200).json(products);
     } catch (err) {
